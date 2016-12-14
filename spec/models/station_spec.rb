@@ -2,13 +2,14 @@ require "rails_helper"
 
 describe "Station" do
   context "#set_fuel_type" do
-    it "renames fuel type by ELEC" do
+    it "renames fuel type by ELEC", :vcr do
       station = Station.new({:access_days_time=>"24 hours daily", :fuel_type_code=>"ELEC", :station_name=>"UDR", :street_address=>"800 Acoma St", :distance=>0.3117})
       type = station.set_fuel_type("ELEC")
 
       expect(type).to eq("Electric")
     end
-    it "renames fuel type by LPG" do
+
+    it "renames fuel type by LPG", :vcr do
       station = Station.new({:access_days_time=>"24 hours daily", :fuel_type_code=>"LPG", :station_name=>"UDR", :street_address=>"800 Acoma St", :distance=>0.3117})
       type = station.set_fuel_type("LPG")
 
@@ -17,7 +18,7 @@ describe "Station" do
   end
 
   context "#find_stations_by_zip_code" do
-    it "returns an array of stations" do
+    it "returns an array of stations", :vcr do
       stations = Station.find_stations_by_zip_code(80203)
 
       expect(stations).to be_a(Array)
@@ -31,8 +32,8 @@ describe "Station" do
   end
 
   context ".process_station_data" do
-    it "translates station JSON to station objects" do
-      service = NrelService.get_stations_by_zip_code(60175)
+    it "translates station JSON to station objects", :vcr do
+      service = NrelService.new.get_stations_by_zip_code(60175)
       stations = Station.process_station_data(service)
 
       expect(stations).to be_a(Array)

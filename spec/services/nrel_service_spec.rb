@@ -2,8 +2,9 @@ require "rails_helper"
 
 describe "NrelService" do
   context ".get_stations_by_zip_code" do
-    it "returns a has of station information" do
-      stations = NrelService.get_stations_by_zip_code(60175)
+    it "returns a has of station information", :vcr do
+      service = NrelService.new
+      stations = service.get_stations_by_zip_code(60175)
 
       expect(stations).to be_a(Array)
       expect(stations[0]).to have_key(:station_name)
