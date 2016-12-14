@@ -19,4 +19,15 @@ class Station
     return "Propane" if fuel_code == "LPG"
   end
 
+  def self.find_stations_by_zip_code(zip)
+    service = NrelService.get_stations_by_zip_code(zip)
+    process_station_data(service)
+  end
+
+  def self.process_station_data(service)
+    @stations = service.map do |station_info|
+      Station.new(station_info)
+    end
+  end
+
 end
