@@ -20,7 +20,8 @@ class Station
   end
 
   def self.find_stations_by_zip_code(zip)
-    service = NrelService.new.get_stations_by_zip_code(zip)
+    # service = NrelService.new.get_stations_by_zip_code(zip)
+    service = NrelService.get_stations_by_zip_code(zip)
     process_station_data(service)
   end
 

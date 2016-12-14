@@ -33,7 +33,7 @@ describe "Station" do
 
   context ".process_station_data" do
     it "translates station JSON to station objects", :vcr do
-      service = NrelService.new.get_stations_by_zip_code(60175)
+      service = NrelService.get_stations_by_zip_code(60175)
       stations = Station.process_station_data(service)
 
       expect(stations).to be_a(Array)
